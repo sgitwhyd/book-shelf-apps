@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<style type="text/tailwindcss">
+			@tailwind base;
+			@tailwind components;
+			@tailwind utilities;
+
+			.container {
+				@layer components {
+					.container-prim {
+						@apply block rounded-lg shadow-lg bg-white w-full mb-5;
+					}
+
+					.container-inner {
+						@apply p-6 text-start;
+					}
+
+					.text-h5 {
+						@apply text-gray-900 text-xl font-medium;
+					}
+
+					.author {
+						@apply text-gray-700 text-base;
+					}
+
+					.year {
+						@apply text-gray-600 text-xs mb-4;
+					}
+
+					.undoButton {
+						@apply inline-block px-6 py-2.5 text-black font-medium text-xs uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out;
+					}
+
+					.deleteButton {
+						@apply inline-block px-6 py-2.5 text-black font-medium text-xs ml-3 uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out;
+					}
+				}
+			}
+		</style>
+		<script>
+			tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							primary: '#F5EDDC',
+							insert: '#A2B5BB',
+						},
+						borderRadius: {
+							primary: '20px',
+						},
+						height: {
+							490: '490px',
+						},
+					},
+				},
+			};
+		</script>
+	</head>
+	<body>
+		<div class="">
+			<h1
+				class="text-3xl p-5 text-center font-bold bg-primary-color bg-primary"
+			>
+				Bookshelf Apps
+			</h1>
+		</div>
+
+		<div class="container mx-auto mt-12">
+			<div class="grid grid-cols-3 gap-8">
+				<div class="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+					<div class="text-3xl my-5 text-center font-bold">Insert Book</div>
+					<form id="form_insert">
+						<div class="form-group mb-6">
+							<label
+								for="exampleInputEmail2"
+								class="form-label inline-block mb-2 text-gray-700"
+								>Judul Buku</label
+							>
+							<input
+								type="text"
+								class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+								id="title"
+								aria-describedby="emailHelp"
+								placeholder="Salmon..."
+								required
+							/>
+						</div>
+						<div class="form-group mb-6">
+							<label
+								for="exampleInputEmail2"
+								class="form-label inline-block mb-2 text-gray-700"
+								>Pengarang</label
+							>
+							<input
+								type="text"
+								class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+								id="author"
+								aria-describedby="emailHelp"
+								placeholder="Raditya Dika...."
+								required
+							/>
+						</div>
+						<div class="form-group mb-6">
+							<label
+								for="exampleInputEmail2"
+								class="form-label inline-block mb-2 text-gray-700"
+								>Tahun</label
+							>
+							<input
+								type="number"
+								class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+								id="year"
+								aria-describedby="emailHelp"
+								placeholder="1945.."
+								required
+								minlength="4"
+								maxlength="5"
+							/>
+						</div>
+
+						<div class="flex justify-between items-center mb-6">
+							<div class="form-group form-check">
+								<input
+									type="checkbox"
+									class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+									id="isComplete"
+								/>
+								<label
+									class="form-check-label inline-block text-gray-800"
+									for="exampleCheck2"
+									>Sudah Dibaca ?</label
+								>
+							</div>
+						</div>
+						<button
+							type="submit"
+							class="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+						>
+							Submit
+						</button>
+					</form>
+				</div>
+				<div class="">
+					<div class="text-3xl my-5 text-center font-bold">Selesai Dibaca</div>
+
+					<div
+						class="block p-6 rounded-lg shadow-lg bg-white max-w-sm max-h-96 overflow-y-scroll"
+					>
+						<div class="flex justify-center flex-col" id="completed_list"></div>
+					</div>
+				</div>
+				<div class="">
+					<div class="text-3xl my-5 text-center font-bold">
+						Belum selesai dibaca
+					</div>
+					<div
+						class="block p-6 rounded-lg shadow-lg bg-white max-w-sm max-h-96 overflow-y-scroll"
+					>
+						<div
+							class="flex justify-center flex-col"
+							id="uncompleted_list"
+						></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="./script.js"></script>
+	</body>
+</html>
